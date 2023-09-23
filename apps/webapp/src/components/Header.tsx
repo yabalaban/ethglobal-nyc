@@ -1,6 +1,5 @@
-import { Button, Flex, HStack, Spacer, Text, VStack, useColorMode } from '@chakra-ui/react';
+import { Button, Flex, Spacer, Text, VStack, useColorMode } from '@chakra-ui/react';
 import { Web3Button } from '@web3modal/react';
-import Snap from './Snap';
 
 const Header = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -17,9 +16,6 @@ const Header = () => {
         </Button>
         <Web3Button />
       </Flex>
-      <HStack justifyContent="end">
-        <Snap />
-      </HStack>
     </VStack>
   );
 };

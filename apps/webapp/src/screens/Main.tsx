@@ -4,6 +4,7 @@ import { WagmiConfig } from 'wagmi';
 import { WC_PROJECT_ID, ethereumClient, wagmiConfig } from '../web3/wallet';
 import Header from '../components/Header';
 import Reports from './Reports';
+import Snap from './Snap';
 
 const Main = () => (
   <>
@@ -12,6 +13,7 @@ const Main = () => (
         <VStack align="stretch">
           <Header />
           <Reports />
+          <Snap />
         </VStack>
       </Container>
     </WagmiConfig>
