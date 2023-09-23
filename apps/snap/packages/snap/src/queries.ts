@@ -22,17 +22,31 @@ const RecipientReportersQuery = `query RecipientReportersQuery($reported: String
   }
 }`
 
-const TokenBalancesQuery = `query Query($owners: [Identity!], $tokenAddress: [Address!]) {
-    TokenBalances(
-      input: {filter: {owner: {_in: $owners}, tokenAddress: {_in: $tokenAddress}}, blockchain: ethereum}
-    )
-    {
-      TokenBalance {
-        formattedAmount
-        tokenAddress
-      }
+const ProfilesQuery = `query Query($owners: [Identity!], $tokenAddress: [Address!]) {
+  TokenBalances(
+    input: {filter: {owner: {_in: $owners}, tokenAddress: {_in: $tokenAddress}}, blockchain: ethereum}
+  ) {
+    TokenBalance {
+      formattedAmount
+      tokenAddress
     }
-  }`
+  }
+  Poaps(input: {filter: {owner: {_in: $owners}}, blockchain: ALL, limit: 100}) {
+    Poap {
+      id
+    }
+  }
+  Socials(input: {filter: {identity: {_in: $owners}}, blockchain: ethereum}) {
+    Social {
+      id
+    }
+  }
+  SocialFollowers(input: {filter: {identity: {_in: $owners}}, blockchain: ALL}) {
+    Follower {
+      id
+    }
+  }
+}`
   
   
 export async function GetDomainReporters(domainHash: string): Promise<[string, boolean][]> {
@@ -44,7 +58,6 @@ export async function GetDomainReporters(domainHash: string): Promise<[string, b
   return reporters;
 }
 
-
 export async function GetRecipientReporters(reported: string): Promise<string[]> {
   let results = await fetchGraphQuery(RecipientReportersQuery, {reported: reported});
   var reporters: string[] = [];
@@ -54,34 +67,39 @@ export async function GetRecipientReporters(reported: string): Promise<string[]>
   return reporters;
 }
 
+function GetTokenTypeTotal(balanceDict: Map<string, number>, keys: string[], tokenBalance: any): number {
+  if (!tokenBalance) {
+    return 0.0;
+  }
+  let wrapped = 0; 
+  keys.forEach(function (address) {
+    wrapped += balanceDict.get(address.toLowerCase()) ?? 0.0;
+  }); 
+  return wrapped;
+}
+
 export async function GetBalances(owners: string[]): Promise<number[]> {
   if (owners.length == 0) {
-    return [0.0, 0.0, 0.0];
+    return [0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
   }
 
   const tokens = Object.keys(WRAPPED_ETH).concat(Object.keys(STABLE_COINS), Object.keys(DAO_TOKENS));
-  const data = await fetchAirstackQuery(TokenBalancesQuery, {owners: owners, tokenAddress: tokens});
+  const data = await fetchAirstackQuery(ProfilesQuery, {owners: owners, tokenAddress: tokens});
   
-  const balance: [string, number][] = data.TokenBalances.TokenBalance.map(function(b: any, i: any) {
+  const balance: [string, number][] = data.TokenBalances.TokenBalance?.map(function(b: any, i: any) {
     return [b.tokenAddress, +b.formattedAmount];
-  });
+  }) ?? [];
   const balanceDict = new Map<string, number>();
   for (let pair of balance) {
     balanceDict.set(pair[0], pair[1]);
   }
-  let wrappedEthTotal = 0; 
-  Object.keys(WRAPPED_ETH).forEach(function (address) {
-    wrappedEthTotal += balanceDict.get(address.toLowerCase()) ?? 0.0;
-  }); 
-  let stableCoinsTotal = 0; 
-  Object.keys(STABLE_COINS).forEach(function (address) {
-    stableCoinsTotal += balanceDict.get(address.toLowerCase()) ?? 0.0;
-  }); 
-  let daoTotal = 0; 
-  Object.keys(DAO_TOKENS).forEach(function (address) {
-    daoTotal += ((balanceDict.get(address.toLowerCase()) ?? 0.0)/ (DAO_HARDCODED_SUPPLY.get(address) ?? 1.0));
-  }); 
-  return [wrappedEthTotal, stableCoinsTotal, daoTotal]
+  const wrappedEth = GetTokenTypeTotal(balanceDict, Object.keys(WRAPPED_ETH), balanceDict);
+  const stableCoins = GetTokenTypeTotal(balanceDict, Object.keys(STABLE_COINS), balanceDict);
+  const daoTokens = GetTokenTypeTotal(balanceDict, Object.keys(DAO_TOKENS), balanceDict);
+  const poaps = data.Poaps.Poap?.length ?? 0.0;
+  const socials = (data.Socials.Social?.length ?? 0.0) * 1.0 / owners.length;
+  const followers = data.SocialFollowers?.Follower?.length ?? 0.0;
+  return [wrappedEth, stableCoins, daoTokens, poaps, socials, followers]
 }
 
 async function fetchAirstackQuery(query: string, variables: Record<string, any>) {

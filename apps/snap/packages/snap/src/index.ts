@@ -20,15 +20,14 @@ export const onTransaction: OnTransactionHandler = async ({ transaction, transac
   
   const domainGoodBalances = await GetBalances(domainGoodReporters.map(x => x[0]));
   const domainBadBalances = await GetBalances(domainBadReporters.map(x => x[0]));
-
-  const domainCheck = [
-    domainGoodBalances[0] > domainBadBalances[0] ? 1 : 0,
-    domainGoodBalances[1] > domainBadBalances[1] ? 1 : 0,
-    domainGoodBalances[2] > domainBadBalances[2] ? 1 : 0,
-  ].reduce(function(a, b){ return a + b; }) >= 2;
+  const coeff = [0.2, 0.2, 0.25, 0.05, 0.05, 0.05]
+  let domainScore = 0.0; 
+  for (let i = 0; i < coeff.length; i++) {
+    domainScore += coeff[i] * (domainGoodBalances[i] > domainBadBalances[i] ? 1 : -1);
+  }
   const reportersCheck = Math.min(1, Math.sqrt(reportersBalance[0] + reportersBalance[1]) / 10000);
-
-  if (!domainCheck || reportersCheck > 0.4) {
+  
+  if (domainScore < 0.0  || reportersCheck > 0.4) {
     return { content: panel([text(`**Transaction type: high score **`)]) };
   } else {
     // all good, nothing to care about
