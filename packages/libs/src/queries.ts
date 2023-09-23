@@ -46,6 +46,7 @@ const MyReportedDomainsQuery = `query MyReportedDomainsQuery($reporter: String!)
   reportedDomains(reporter: $reporter) {
     id
     domainHash
+    domain
     good
     reporter
   }
@@ -64,7 +65,7 @@ export async function GetMyReportedDomains(reporter: string): Promise<string[]> 
   const results = await fetchGraphQuery(MyReportedDomainsQuery, { reporter: reporter });
   const reported: string[] = [];
   results.reportedDomains.forEach((reportedDomain: any) => {
-    reported.push(reportedDomain.domainHash);
+    reported.push(reportedDomain.domain);
   });
   return reported;
 }

@@ -4,6 +4,7 @@ import {
   CardBody,
   CardFooter,
   CardHeader,
+  Divider,
   Heading,
   Image,
   List,
@@ -58,56 +59,59 @@ const Snap = () => {
   return (
     <>
       {shouldDisplay && (
-        <Card align="center">
-          <CardHeader>
-            <Heading size="md">Sqam Insights is better with MetaMask</Heading>
-          </CardHeader>
-          <CardBody>
-            <List spacing={3}>
-              <ListItem>
-                <ListIcon as={StarIcon} color="green.500" />
-                Tap into community to get scam and fishing insights for every transaction
-              </ListItem>
-              <ListItem>
-                <ListIcon as={LockIcon} color="green.500" />
-                Avoid scams and keep your wealth secured
-              </ListItem>
-              <ListItem>
-                <ListIcon as={CheckIcon} color="green.500" />
-                Check if the domain is safe to interact with
-              </ListItem>
-            </List>
-          </CardBody>
-          <CardFooter>
-            {!isMetaMaskReady && (
-              <Button leftIcon={flaskIcon} onClick={onInstall} colorScheme="cyan" variant="solid">
-                Use MetaMask
-              </Button>
-            )}
-            {isMetaMaskReady && !state.installedSnap && (
-              <Button
-                leftIcon={flaskIcon}
-                onClick={onConnect}
-                colorScheme="cyan"
-                variant="solid"
-                disabled={!isMetaMaskReady}
-              >
-                Install Sqam Insights
-              </Button>
-            )}
-            {isMetaMaskReady && shouldDisplayReconnectButton(state.installedSnap) && (
-              <Button
-                leftIcon={flaskIcon}
-                onClick={onConnect}
-                colorScheme="cyan"
-                variant="solid"
-                disabled={!state.installedSnap}
-              >
-                🛠️ Reinstall 🛠️
-              </Button>
-            )}
-          </CardFooter>
-        </Card>
+        <>
+          <Divider />
+          <Card align="center">
+            <CardHeader>
+              <Heading size="md">Sqam Insights is better with MetaMask</Heading>
+            </CardHeader>
+            <CardBody>
+              <List spacing={3}>
+                <ListItem>
+                  <ListIcon as={StarIcon} color="green.500" />
+                  Tap into community to get scam and fishing insights for every transaction
+                </ListItem>
+                <ListItem>
+                  <ListIcon as={LockIcon} color="green.500" />
+                  Avoid scams and keep your wealth secured
+                </ListItem>
+                <ListItem>
+                  <ListIcon as={CheckIcon} color="green.500" />
+                  Check if the domain is safe to interact with
+                </ListItem>
+              </List>
+            </CardBody>
+            <CardFooter>
+              {!isMetaMaskReady && (
+                <Button leftIcon={flaskIcon} onClick={onInstall} colorScheme="cyan" variant="solid">
+                  Use MetaMask
+                </Button>
+              )}
+              {isMetaMaskReady && !state.installedSnap && (
+                <Button
+                  leftIcon={flaskIcon}
+                  onClick={onConnect}
+                  colorScheme="cyan"
+                  variant="solid"
+                  disabled={!isMetaMaskReady}
+                >
+                  Install Sqam Insights
+                </Button>
+              )}
+              {isMetaMaskReady && shouldDisplayReconnectButton(state.installedSnap) && (
+                <Button
+                  leftIcon={flaskIcon}
+                  onClick={onConnect}
+                  colorScheme="cyan"
+                  variant="solid"
+                  disabled={!state.installedSnap}
+                >
+                  🛠️ Reinstall 🛠️
+                </Button>
+              )}
+            </CardFooter>
+          </Card>
+        </>
       )}
     </>
   );
