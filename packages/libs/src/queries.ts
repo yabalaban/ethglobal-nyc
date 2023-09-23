@@ -46,6 +46,14 @@ const ProfilesQuery = `query Query($owners: [Identity!], $tokenAddress: [Address
       id
     }
   }
+  Domains(
+    input: {filter: {resolvedAddress: {_in: $resolved}, isPrimary: {_eq: true}}, blockchain: ethereum}
+  ) {
+    Domain {
+      name
+      resolvedAddress
+    }
+  }
 }`;
 
 const MyReportedAddressesQuery = `query MyReportedAddressesQuery($reporter: String!) {
@@ -127,8 +135,8 @@ function GetTokenTypeTotal(
   return wrapped;
 }
 
-export async function GetBalances(owners: string[]): Promise<number[]> {
-  if (owners.length == 0) {
+export async function GetBalances(owners: string[]): Promise<any[]> {
+  if (owners.length === 0) {
     return [0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
   }
 
@@ -136,7 +144,11 @@ export async function GetBalances(owners: string[]): Promise<number[]> {
     Object.keys(STABLE_COINS),
     Object.keys(DAO_TOKENS),
   );
-  const data = await fetchAirstackQuery(ProfilesQuery, { owners: owners, tokenAddress: tokens });
+  const data = await fetchAirstackQuery(ProfilesQuery, {
+    owners,
+    resolved: owners,
+    tokenAddress: tokens,
+  });
 
   const balance: [string, number][] =
     data.TokenBalances.TokenBalance?.map((b: any) => [b.tokenAddress, +b.formattedAmount]) ?? [];
@@ -150,7 +162,18 @@ export async function GetBalances(owners: string[]): Promise<number[]> {
   const poaps = data.Poaps.Poap?.length ?? 0.0;
   const socials = ((data.Socials.Social?.length ?? 0.0) * 1.0) / owners.length;
   const followers = data.SocialFollowers?.Follower?.length ?? 0.0;
-  return [wrappedEth, stableCoins, daoTokens, poaps, socials, followers];
+  const domains = data.Domains?.Domain ?? [];
+  const domainsDict = new Map<string, string>();
+  for (const pair of domains) {
+    domainsDict.set(pair.resolvedAddress, pair.name);
+  }
+  const confirmedBy = new Set<string>();
+  for (const address of owners) {
+    if (domainsDict.get(address)) {
+      confirmedBy.add(domainsDict.get(address)!);
+    }
+  }
+  return [wrappedEth, stableCoins, daoTokens, poaps, socials, followers, confirmedBy];
 }
 
 export async function GetENSDomains(resolvedAddresses: string[]): Promise<Record<string, string>> {

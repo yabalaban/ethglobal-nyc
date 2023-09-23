@@ -1,8 +1,5 @@
-import {
-  SeverityLevel,
-  type OnTransactionHandler,
-} from '@metamask/snaps-types';
-import { panel, text } from '@metamask/snaps-ui';
+import { type OnTransactionHandler } from '@metamask/snaps-types';
+import { copyable, heading, panel, text } from '@metamask/snaps-ui';
 import { queries } from '@sqam/libs';
 import keccak256 from 'keccak256';
 
@@ -44,15 +41,37 @@ export const onTransaction: OnTransactionHandler = async ({
     );
 
     if (domainScore < 0.0 || reportersCheck > 0.4) {
+      const community: any[] = [];
+      domainBadBalances[6].forEach((address: any) => {
+        community.push(copyable(address));
+      });
       return {
-        content: panel([text(`**Transaction type: high score **`)]),
-        severity: SeverityLevel.Critical,
+        content: panel([
+          heading(`Transaction or domain look like scam!`),
+          text('Blocked for you by:'),
+          ...community,
+        ]),
       };
     }
 
-    return { content: panel([text(`**Transaction type: low score **`)]) };
-  } catch (e) {
-    console.error(e);
-    return { content: panel([text(`**Transaction type: low score **`)]) };
+    const community: any[] = [];
+    domainGoodBalances[6].forEach((address: string) => {
+      community.push(copyable(address));
+    });
+    return {
+      content: panel([
+        heading(`Transaction and domain seem to be fine!`),
+        text('Approved by:'),
+        ...community,
+      ]),
+    };
+  } catch (error: any) {
+    // eslint-disable-next-line no-console
+    console.error(error);
+    return {
+      content: panel([
+        text('Unable to assess transaction. Proceed at your own judgement'),
+      ]),
+    };
   }
 };
