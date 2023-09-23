@@ -1,49 +1,37 @@
-import { OnTransactionHandler } from '@metamask/snaps-types';
+import { OnRpcRequestHandler, OnTransactionHandler } from '@metamask/snaps-types';
 import { panel, text, heading } from '@metamask/snaps-ui';
 import { GetBalances, GetDomainReporters, GetRecipientReporters } from './queries';
 
 const keccak256 = require('keccak256');
 
-function scoreAddressReporter(balance: number[]): number {
-  return 0.5;
-}
-
-function scoreDomainReporter(balance: number[]): number {
-  return 0.5;
-}
-
 export const onTransaction: OnTransactionHandler = async ({ transaction, transactionOrigin }) => {
   const recipient = transaction.to as string; 
-  const reporters1 = await GetRecipientReporters(recipient);
-  
+  const recipientReporters = await GetRecipientReporters(recipient);
+  const reportersBalance = await GetBalances(recipientReporters);
+
   const domainHash = `0x${keccak256(transactionOrigin).toString('hex')}`;
-  const reporters2 = await GetDomainReporters(domainHash);
+  const domainReportes = await GetDomainReporters(domainHash);
+  const domainGoodReporters = domainReportes.filter(function (el, i, arr) {
+    return el[1] == true;
+  });
+  const domainBadReporters = domainReportes.filter(function (el, i, arr) {
+    return el[1] == false;
+  });
   
-  const balances1 = await GetBalances(reporters1);
-  const addressReportersBalance = reporters1.map(function(r, i) {
-    return [r, balances1[i]];
-  });
+  const domainGoodBalances = await GetBalances(domainGoodReporters.map(x => x[0]));
+  const domainBadBalances = await GetBalances(domainBadReporters.map(x => x[0]));
 
-  const balances2 = await GetBalances(reporters2.map((function(r, i) { return r[0]; })));
-  const domainReportersBalance = reporters1.map(function(r, i) {
-    return [r, balances1[i]];
-  });
+  const domainCheck = [
+    domainGoodBalances[0] > domainBadBalances[0] ? 1 : 0,
+    domainGoodBalances[1] > domainBadBalances[1] ? 1 : 0,
+    domainGoodBalances[2] > domainBadBalances[2] ? 1 : 0,
+  ].reduce(function(a, b){ return a + b; }) >= 2;
+  const reportersCheck = Math.min(1, Math.sqrt(reportersBalance[0] + reportersBalance[1]) / 10000);
 
-  const score1 = scoreAddressReporter(balances1);
-  const score2 = scoreDomainReporter(balances2);
-  const totalScore = 0.2 * score1 + 0.8 * score2;
-    
-  if (totalScore < 0.3) {
-    // high severity, low score
-    return { content: [text(`**Transaction type: low score **`)] };
-  } else if (totalScore > 0.7) {
-    // info level, high score
+  if (!domainCheck || reportersCheck > 0.4) {
     return { content: panel([text(`**Transaction type: high score **`)]) };
   } else {
-    // info level, no signal
-    return { content: panel([text(`**Transaction type: middle score **`)]) };
+    // all good, nothing to care about
+    return { content: panel([text(`**Transaction type: low score **`)]) };
   }
 };
-
-
-GetBalances(["yabalaban.eth"])
