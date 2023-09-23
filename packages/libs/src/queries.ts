@@ -1,4 +1,4 @@
-import { ACCEPTED_TOKENS, GRAPH_QUERY_URL } from './constants';
+import { DAO_TOKENS, GRAPH_QUERY_URL, STABLE_COINS, WRAPPED_ETH } from './constants';
 
 const AIRSTACK_ENDPOINT = 'https://api.airstack.xyz/gql';
 const AIRSTACK_KEY = 'c017255cba7c4e199917a94addfdb682';
@@ -22,14 +22,28 @@ const RecipientReportersQuery = `query RecipientReportersQuery($reported: String
   }
 }`;
 
-const TokenBalancesQuery = `query Query($owners: [Identity!], $tokenAddress: [Address!]) {
+const ProfilesQuery = `query Query($owners: [Identity!], $tokenAddress: [Address!]) {
   TokenBalances(
     input: {filter: {owner: {_in: $owners}, tokenAddress: {_in: $tokenAddress}}, blockchain: ethereum}
-  )
-  {
+  ) {
     TokenBalance {
       formattedAmount
       tokenAddress
+    }
+  }
+  Poaps(input: {filter: {owner: {_in: $owners}}, blockchain: ALL, limit: 100}) {
+    Poap {
+      id
+    }
+  }
+  Socials(input: {filter: {identity: {_in: $owners}}, blockchain: ethereum}) {
+    Social {
+      id
+    }
+  }
+  SocialFollowers(input: {filter: {identity: {_in: $owners}}, blockchain: ALL}) {
+    Follower {
+      id
     }
   }
 }`;
@@ -98,14 +112,45 @@ export async function GetRecipientReporters(reported: string): Promise<string[]>
   return reporters;
 }
 
+function GetTokenTypeTotal(
+  balanceDict: Map<string, number>,
+  keys: string[],
+  tokenBalance: any,
+): number {
+  if (!tokenBalance) {
+    return 0.0;
+  }
+  let wrapped = 0;
+  keys.forEach(function (address) {
+    wrapped += balanceDict.get(address.toLowerCase()) ?? 0.0;
+  });
+  return wrapped;
+}
+
 export async function GetBalances(owners: string[]): Promise<number[]> {
-  const data = await fetchAirstackQuery(TokenBalancesQuery, {
-    owners: owners,
-    tokenAddress: Object.keys(ACCEPTED_TOKENS),
-  });
-  return data.TokenBalances.TokenBalance.map(function (b: any) {
-    return b.formattedAmount;
-  });
+  if (owners.length == 0) {
+    return [0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
+  }
+
+  const tokens = Object.keys(WRAPPED_ETH).concat(
+    Object.keys(STABLE_COINS),
+    Object.keys(DAO_TOKENS),
+  );
+  const data = await fetchAirstackQuery(ProfilesQuery, { owners: owners, tokenAddress: tokens });
+
+  const balance: [string, number][] =
+    data.TokenBalances.TokenBalance?.map((b: any) => [b.tokenAddress, +b.formattedAmount]) ?? [];
+  const balanceDict = new Map<string, number>();
+  for (const pair of balance) {
+    balanceDict.set(pair[0], pair[1]);
+  }
+  const wrappedEth = GetTokenTypeTotal(balanceDict, Object.keys(WRAPPED_ETH), balanceDict);
+  const stableCoins = GetTokenTypeTotal(balanceDict, Object.keys(STABLE_COINS), balanceDict);
+  const daoTokens = GetTokenTypeTotal(balanceDict, Object.keys(DAO_TOKENS), balanceDict);
+  const poaps = data.Poaps.Poap?.length ?? 0.0;
+  const socials = ((data.Socials.Social?.length ?? 0.0) * 1.0) / owners.length;
+  const followers = data.SocialFollowers?.Follower?.length ?? 0.0;
+  return [wrappedEth, stableCoins, daoTokens, poaps, socials, followers];
 }
 
 export async function GetENSDomains(resolvedAddresses: string[]): Promise<Record<string, string>> {

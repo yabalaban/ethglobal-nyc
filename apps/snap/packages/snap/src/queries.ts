@@ -55,10 +55,10 @@ const ProfilesQuery = `query Query($owners: [Identity!], $resolved: [Address!], 
     }
   }
 }`
-  
-  
+
+
 export async function GetDomainReporters(domainHash: string): Promise<[string, boolean][]> {
-  let results = await fetchGraphQuery(DomainReportersQuery, {domainHash: domainHash});
+  const results = await fetchGraphQuery(DomainReportersQuery, {domainHash});
   var reporters: [string, boolean][] = [];
   results.reportedDomains.forEach((reportedDomain: any) => {
     reporters.push([reportedDomain.reporter, reportedDomain.good])
@@ -67,7 +67,7 @@ export async function GetDomainReporters(domainHash: string): Promise<[string, b
 }
 
 export async function GetRecipientReporters(reported: string): Promise<string[]> {
-  let results = await fetchGraphQuery(RecipientReportersQuery, {reported: reported});
+  const results = await fetchGraphQuery(RecipientReportersQuery, {reported});
   var reporters: string[] = [];
   results.reportedAddresses.forEach((reportedDomain: any) => {
     reporters.push(reportedDomain.reporter)
@@ -79,10 +79,10 @@ function GetTokenTypeTotal(balanceDict: Map<string, number>, keys: string[], tok
   if (!tokenBalance) {
     return 0.0;
   }
-  let wrapped = 0; 
+  let wrapped = 0;
   keys.forEach(function (address) {
     wrapped += balanceDict.get(address.toLowerCase()) ?? 0.0;
-  }); 
+  });
   return wrapped;
 }
 
@@ -93,7 +93,7 @@ export async function GetBalances(owners: string[]): Promise<any[]> {
 
   const tokens = Object.keys(WRAPPED_ETH).concat(Object.keys(STABLE_COINS), Object.keys(DAO_TOKENS));
   const data = await fetchAirstackQuery(ProfilesQuery, {owners: owners, resolved: owners, tokenAddress: tokens});
-  
+
   const balance: [string, number][] = data.TokenBalances.TokenBalance?.map(function(b: any, i: any) {
     return [b.tokenAddress, +b.formattedAmount];
   }) ?? [];
@@ -120,7 +120,7 @@ export async function GetBalances(owners: string[]): Promise<any[]> {
 }
 
 async function fetchAirstackQuery(query: string, variables: Record<string, any>) {
-    let results = await fetch(AIRSTACK_ENDPOINT, {
+    const results = await fetch(AIRSTACK_ENDPOINT, {
         method: 'POST',
 
         headers: {
@@ -133,16 +133,16 @@ async function fetchAirstackQuery(query: string, variables: Record<string, any>)
         variables,
         }),
     })
-    let characters = await results.json();
+    const characters = await results.json();
     return characters.data
 }
 
 async function fetchGraphQuery(query: string, variables: Record<string, any>) {
-  let body = JSON.stringify({
+  const body = JSON.stringify({
     query,
     variables
     });
-    let results = await fetch(GRAPH_QUERY_URL, {
+    const results = await fetch(GRAPH_QUERY_URL, {
         method: 'POST',
 
         headers: {
@@ -154,6 +154,6 @@ async function fetchGraphQuery(query: string, variables: Record<string, any>) {
         variables
         }),
     })
-    let characters = await results.json();
+    const characters = await results.json();
     return characters.data
 }

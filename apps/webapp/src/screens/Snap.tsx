@@ -100,7 +100,6 @@ const Snap = () => {
               )}
               {isMetaMaskReady && shouldDisplayReconnectButton(state.installedSnap) && (
                 <Button
-                  leftIcon={flaskIcon}
                   onClick={onConnect}
                   colorScheme="cyan"
                   variant="solid"
