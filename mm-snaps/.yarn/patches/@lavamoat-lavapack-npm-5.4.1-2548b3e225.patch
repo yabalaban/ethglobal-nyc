@@ -1,0 +1,31 @@
+diff --git a/src/runtime.js b/src/runtime.js
+index 5bee3d6fc752ee133aff8b12e503b674d7f32d1a..8141bff31e30d73b2f8be334272d2e20a1e73e0c 100644
+--- a/src/runtime.js
++++ b/src/runtime.js
+@@ -11326,6 +11326,8 @@ function observeImports(map, importName, importIndex) {
+       errorTaming: 'unsafe',
+       // shows the full call stack
+       stackFiltering: 'verbose',
++      // prevent issues when dealing with the "override mistake"
++      overrideTaming: 'severe',
+     }
+
+     lockdown(lockdownOptions)
+@@ -12451,6 +12453,17 @@ module.exports = {
+
+
+   function loadModuleData (moduleId) {
++    if (typeof window === 'undefined' && typeof require === 'function' && require('node:module').isBuiltin(moduleId)) {
++      return {
++        type: 'builtin',
++        package: moduleId,
++        id: moduleId,
++        // Using unprotected require
++        moduleInitializer: (_, module) => {
++          module.exports = require(moduleId);
++        },
++      }
++    }
+     if (!moduleRegistry.has(moduleId)) {
+       throw new Error(`no module registered for "${moduleId}" (${typeof moduleId})`)
+     }
