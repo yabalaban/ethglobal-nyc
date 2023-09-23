@@ -1,5 +1,5 @@
 import { EthereumClient, w3mConnectors, w3mProvider } from '@web3modal/ethereum';
-import { configureChains, createConfig } from 'wagmi';
+import { Address, configureChains, createConfig } from 'wagmi';
 import { sepolia, base, gnosis } from 'wagmi/chains';
 
 const chains = [sepolia, base, gnosis];
@@ -12,3 +12,5 @@ export const wagmiConfig = createConfig({
   publicClient,
 });
 export const ethereumClient = new EthereumClient(wagmiConfig, chains);
+
+export const SQAM_CONTRACT = import.meta.env.VITE_SQAM_CONTRACT as Address;

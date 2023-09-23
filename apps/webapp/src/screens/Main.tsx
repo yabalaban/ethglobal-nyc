@@ -3,6 +3,7 @@ import { Web3Modal } from '@web3modal/react';
 import { WagmiConfig } from 'wagmi';
 import { WC_PROJECT_ID, ethereumClient, wagmiConfig } from '../web3/wallet';
 import Header from '../components/Header';
+import Reports from './Reports';
 
 const Main = () => (
   <>
@@ -10,6 +11,7 @@ const Main = () => (
       <Container py="16px">
         <VStack align="stretch">
           <Header />
+          <Reports />
         </VStack>
       </Container>
     </WagmiConfig>
