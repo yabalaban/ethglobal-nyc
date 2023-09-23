@@ -18,9 +18,11 @@ contract SqamTest is Test, SqamEvents {
         sqam.reportAddress(reported);
     }
 
-    function testReportDomain(bytes32 domainHash, bool good) public {
+    function testReportDomain(bool good) public {
         vm.expectEmit(true, true, true, true);
-        emit ReportedDomain(domainHash, good, address(this));
-        sqam.reportDomain(domainHash, good);
+        string memory domain = "test.com";
+        bytes32 domainHash = keccak256(bytes(domain));
+        emit ReportedDomain(domainHash, good, address(this), domain);
+        sqam.reportDomain(domain, good);
     }
 }

@@ -12,19 +12,24 @@ import {
   ModalBody,
   Text,
   useToast,
+  Card,
+  CardBody,
+  Flex,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import NewReportForm from '../components/NewReportForm';
 import { AddressReport, DomainReport } from '../types/report';
 import { useSqamReportAddress, useSqamReportDomain } from '../web3/contracts';
 import { SQAM_CONTRACT } from '../web3/wallet';
-import { Address, keccak256, toHex } from 'viem';
+import { Address } from 'viem';
 import { waitForTransactionReceipt } from 'viem/actions';
-import { usePublicClient } from 'wagmi';
+import { useAccount, usePublicClient } from 'wagmi';
+import useReports from '../hooks/useReports';
 
 const Reports = () => {
   const publicClient = usePublicClient();
   const toast = useToast();
+  const { address } = useAccount();
   const [isLoading, setIsLoading] = useState(false);
   const [isNewReportModalOpen, setIsNewReportModalOpen] = useState(false);
   const { writeAsync: reportAddress } = useSqamReportAddress({
@@ -33,6 +38,7 @@ const Reports = () => {
   const { writeAsync: reportDomain } = useSqamReportDomain({
     address: SQAM_CONTRACT,
   });
+  const { reports, reloadReports } = useReports({ address });
 
   const onReport = async (report: DomainReport | AddressReport) => {
     setIsLoading(true);
@@ -40,7 +46,7 @@ const Reports = () => {
       let receipt: { hash: Address };
       if ('domain' in report) {
         receipt = await reportDomain({
-          args: [keccak256(toHex(report.domain)), report.type === 'good'],
+          args: [report.domain, report.type === 'good'],
         });
       } else {
         receipt = await reportAddress({
@@ -48,6 +54,7 @@ const Reports = () => {
         });
       }
       await waitForTransactionReceipt(publicClient, { ...receipt, confirmations: 2 });
+      await reloadReports();
       setIsNewReportModalOpen(false);
       toast({
         title: '🎉 Reported',
@@ -70,7 +77,7 @@ const Reports = () => {
       <VStack align="stretch">
         <HStack pt="12px">
           <Text as="b" fontSize="xl">
-            Reports
+            My Reports
           </Text>
           <Spacer />
           <IconButton
@@ -84,7 +91,19 @@ const Reports = () => {
           />
         </HStack>
         <VStack alignItems="stretch">
-          <></>
+          {reports.map((report) => (
+            <Card
+              key={`report-${report}`}
+              _hover={{ opacity: 0.8, cursor: 'pointer' }}
+              // onClick={() => setOpenReport(report)}
+            >
+              <CardBody>
+                <Flex align="center">
+                  <Text>{report}</Text>
+                </Flex>
+              </CardBody>
+            </Card>
+          ))}
         </VStack>
       </VStack>
       <Modal isOpen={isNewReportModalOpen} size="xl" onClose={() => setIsNewReportModalOpen(false)}>
