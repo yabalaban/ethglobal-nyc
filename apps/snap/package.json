@@ -50,6 +50,8 @@
     "node": ">=16.0.0"
   },
   "dependencies": {
-    "@airstack/node": "^0.0.5"
+    "@metamask/snaps-types": "0.32.2",
+    "@metamask/snaps-ui": "0.32.2",
+    "keccak256": "^1.0.6"
   }
 }

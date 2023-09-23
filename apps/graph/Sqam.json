@@ -1,0 +1,917 @@
+{
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "trustredForwarder",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "reported",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "reporter",
+          "type": "address"
+        }
+      ],
+      "name": "ReportedAddress",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "bytes32",
+          "name": "domainHash",
+          "type": "bytes32"
+        },
+        {
+          "indexed": true,
+          "internalType": "bool",
+          "name": "good",
+          "type": "bool"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "reporter",
+          "type": "address"
+        }
+      ],
+      "name": "ReportedDomain",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "forwarder",
+          "type": "address"
+        }
+      ],
+      "name": "isTrustedForwarder",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "reported",
+          "type": "address"
+        }
+      ],
+      "name": "reportAddress",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "domainHash",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bool",
+          "name": "good",
+          "type": "bool"
+        }
+      ],
+      "name": "reportDomain",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": {
+    "object": "0x60a060405234801561001057600080fd5b506040516102cf3803806102cf83398101604081905261002f91610040565b6001600160a01b0316608052610070565b60006020828403121561005257600080fd5b81516001600160a01b038116811461006957600080fd5b9392505050565b60805161023e6100916000396000818160560152610155015261023e6000f3fe608060405234801561001057600080fd5b50600436106100415760003560e01c8063572b6c0514610046578063e18f16e61461009a578063f2cb7083146100af575b600080fd5b6100866100543660046101a3565b7f00000000000000000000000000000000000000000000000000000000000000006001600160a01b0390811691161490565b604051901515815260200160405180910390f35b6100ad6100a83660046101d3565b6100c2565b005b6100ad6100bd3660046101a3565b610107565b6100ca610151565b6001600160a01b0316811515837fa723bdc2e90d5a799c028b7ee1841e84f7153469ca9b19a7719563a2023a109260405160405180910390a45050565b61010f610151565b6001600160a01b0316816001600160a01b03167f8b2d366ebc8da4bea31737af54c8577003759bfddede87fc646339052d4b403360405160405180910390a350565b60007f00000000000000000000000000000000000000000000000000000000000000006001600160a01b03163314801561018c575060143610155b1561019e575060131936013560601c90565b503390565b6000602082840312156101b557600080fd5b81356001600160a01b03811681146101cc57600080fd5b9392505050565b600080604083850312156101e657600080fd5b82359150602083013580151581146101fd57600080fd5b80915050925092905056fea2646970667358221220886134e2f6e37b91260630f46d3231f359df88bff26e65c3a24493c90d3f348664736f6c63430008150033",
+    "sourceMap": "197:455:22:-:0;;;310:87;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;-1:-1:-1;;;;;487:36:19;;;197:455:22;;14:290:25;84:6;137:2;125:9;116:7;112:23;108:32;105:52;;;153:1;150;143:12;105:52;179:16;;-1:-1:-1;;;;;224:31:25;;214:42;;204:70;;270:1;267;260:12;204:70;293:5;14:290;-1:-1:-1;;;14:290:25:o;:::-;197:455:22;;;;;;;;;;;;;;;;;",
+    "linkReferences": {}
+  },
+  "deployedBytecode": {
+    "object": "0x608060405234801561001057600080fd5b50600436106100415760003560e01c8063572b6c0514610046578063e18f16e61461009a578063f2cb7083146100af575b600080fd5b6100866100543660046101a3565b7f00000000000000000000000000000000000000000000000000000000000000006001600160a01b0390811691161490565b604051901515815260200160405180910390f35b6100ad6100a83660046101d3565b6100c2565b005b6100ad6100bd3660046101a3565b610107565b6100ca610151565b6001600160a01b0316811515837fa723bdc2e90d5a799c028b7ee1841e84f7153469ca9b19a7719563a2023a109260405160405180910390a45050565b61010f610151565b6001600160a01b0316816001600160a01b03167f8b2d366ebc8da4bea31737af54c8577003759bfddede87fc646339052d4b403360405160405180910390a350565b60007f00000000000000000000000000000000000000000000000000000000000000006001600160a01b03163314801561018c575060143610155b1561019e575060131936013560601c90565b503390565b6000602082840312156101b557600080fd5b81356001600160a01b03811681146101cc57600080fd5b9392505050565b600080604083850312156101e657600080fd5b82359150602083013580151581146101fd57600080fd5b80915050925092905056fea2646970667358221220886134e2f6e37b91260630f46d3231f359df88bff26e65c3a24493c90d3f348664736f6c63430008150033",
+    "sourceMap": "197:455:22:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;536:136:19;;;;;;:::i;:::-;648:17;-1:-1:-1;;;;;635:30:19;;;;;;;536:136;;;;470:14:25;;463:22;445:41;;433:2;418:18;536:136:19;;;;;;;520:130:22;;;;;;:::i;:::-;;:::i;:::-;;403:111;;;;;;:::i;:::-;;:::i;520:130::-;630:12;:10;:12::i;:::-;-1:-1:-1;;;;;597:46:22;624:4;597:46;;612:10;597:46;;;;;;;;;;520:130;;:::o;403:111::-;494:12;:10;:12::i;:::-;-1:-1:-1;;;;;468:39:22;484:8;-1:-1:-1;;;;;468:39:22;;;;;;;;;;;403:111;:::o;678:473:19:-;740:14;648:17;-1:-1:-1;;;;;635:30:19;789:10;635:30;770:55;;;;-1:-1:-1;823:2:19;804:8;:21;;770:55;766:379;;;-1:-1:-1;;;1044:14:19;1040:23;1027:37;1023:2;1019:46;678:473;:::o;766:379::-;-1:-1:-1;719:10:20;;678:473:19:o;14:286:25:-;73:6;126:2;114:9;105:7;101:23;97:32;94:52;;;142:1;139;132:12;94:52;168:23;;-1:-1:-1;;;;;220:31:25;;210:42;;200:70;;266:1;263;256:12;200:70;289:5;14:286;-1:-1:-1;;;14:286:25:o;497:341::-;562:6;570;623:2;611:9;602:7;598:23;594:32;591:52;;;639:1;636;629:12;591:52;675:9;662:23;652:33;;735:2;724:9;720:18;707:32;782:5;775:13;768:21;761:5;758:32;748:60;;804:1;801;794:12;748:60;827:5;817:15;;;497:341;;;;;:::o",
+    "linkReferences": {},
+    "immutableReferences": {
+      "43367": [
+        {
+          "start": 86,
+          "length": 32
+        },
+        {
+          "start": 341,
+          "length": 32
+        }
+      ]
+    }
+  },
+  "methodIdentifiers": {
+    "isTrustedForwarder(address)": "572b6c05",
+    "reportAddress(address)": "f2cb7083",
+    "reportDomain(bytes32,bool)": "e18f16e6"
+  },
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.21+commit.d9974bed\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"trustredForwarder\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"reported\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"reporter\",\"type\":\"address\"}],\"name\":\"ReportedAddress\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"domainHash\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"bool\",\"name\":\"good\",\"type\":\"bool\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"reporter\",\"type\":\"address\"}],\"name\":\"ReportedDomain\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"forwarder\",\"type\":\"address\"}],\"name\":\"isTrustedForwarder\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"reported\",\"type\":\"address\"}],\"name\":\"reportAddress\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"domainHash\",\"type\":\"bytes32\"},{\"internalType\":\"bool\",\"name\":\"good\",\"type\":\"bool\"}],\"name\":\"reportDomain\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"constructor\":{\"details\":\"there's no state to make it as cheap as possible\"}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"src/Sqam.sol\":\"Sqam\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":@openzeppelin/=lib/openzeppelin-contracts/\",\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/\",\":forge-std/=lib/forge-std/src/\",\":openzeppelin-contracts/=lib/openzeppelin-contracts/\",\":openzeppelin/=lib/openzeppelin-contracts/contracts/\"]},\"sources\":{\"lib/openzeppelin-contracts/contracts/metatx/ERC2771Context.sol\":{\"keccak256\":\"0x5e8c266715f6454b732e6c12a85f75dcf3b1c298a90830bb56bfda29fa5b6264\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://3c39e6260f19fc56dc7fe0289cd49d781c33d85520ffed44e45c138f94110a84\",\"dweb:/ipfs/QmPE2XDhT3C1xa3MeVaiUMpNnDquK9kDiWAdkayktTGbZA\"]},\"lib/openzeppelin-contracts/contracts/utils/Context.sol\":{\"keccak256\":\"0xe2e337e6dde9ef6b680e07338c493ebea1b5fd09b43424112868e9cc1706bca7\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://6df0ddf21ce9f58271bdfaa85cde98b200ef242a05a3f85c2bc10a8294800a92\",\"dweb:/ipfs/QmRK2Y5Yc6BK7tGKkgsgn3aJEQGi5aakeSPZvS65PV8Xp3\"]},\"src/Sqam.sol\":{\"keccak256\":\"0x9862190c8a1f6f381d570d65db82e66eb1ec6eb113be648d467248c63b90d6a4\",\"license\":\"UNLICENSED\",\"urls\":[\"bzz-raw://7c6b05a13c45e2267d3d7e46aaf75beafa275f5e2fbfa3e9e71b85ef70db8078\",\"dweb:/ipfs/QmWd4M1XBWh5bJMBZmZhBJxEos5fhzdd9zcEmhzrJpjxKe\"]},\"src/SqamEvents.sol\":{\"keccak256\":\"0x86af94cd105a8aef14853077599a2f4c3a523f9174d41b18fc53a12ca50ba3ba\",\"license\":\"UNLICENSED\",\"urls\":[\"bzz-raw://db31febeb27aa957824a1d1c6dacb2008604efeb48b346cc447ac3155e32f605\",\"dweb:/ipfs/Qmf5ZQz3ujvEkfre45YJpTWr6HbtKhB7Svq6pA9PeVoD63\"]}},\"version\":1}",
+  "metadata": {
+    "compiler": {
+      "version": "0.8.21+commit.d9974bed"
+    },
+    "language": "Solidity",
+    "output": {
+      "abi": [
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "trustredForwarder",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "constructor"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "reported",
+              "type": "address",
+              "indexed": true
+            },
+            {
+              "internalType": "address",
+              "name": "reporter",
+              "type": "address",
+              "indexed": true
+            }
+          ],
+          "type": "event",
+          "name": "ReportedAddress",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "domainHash",
+              "type": "bytes32",
+              "indexed": true
+            },
+            {
+              "internalType": "bool",
+              "name": "good",
+              "type": "bool",
+              "indexed": true
+            },
+            {
+              "internalType": "address",
+              "name": "reporter",
+              "type": "address",
+              "indexed": true
+            }
+          ],
+          "type": "event",
+          "name": "ReportedDomain",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "forwarder",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "isTrustedForwarder",
+          "outputs": [
+            {
+              "internalType": "bool",
+              "name": "",
+              "type": "bool"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "reported",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "reportAddress"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "domainHash",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bool",
+              "name": "good",
+              "type": "bool"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "reportDomain"
+        }
+      ],
+      "devdoc": {
+        "kind": "dev",
+        "methods": {
+          "constructor": {
+            "details": "there's no state to make it as cheap as possible"
+          }
+        },
+        "version": 1
+      },
+      "userdoc": {
+        "kind": "user",
+        "methods": {},
+        "version": 1
+      }
+    },
+    "settings": {
+      "remappings": [
+        "@openzeppelin/=lib/openzeppelin-contracts/",
+        "ds-test/=lib/forge-std/lib/ds-test/src/",
+        "erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/",
+        "forge-std/=lib/forge-std/src/",
+        "openzeppelin-contracts/=lib/openzeppelin-contracts/",
+        "openzeppelin/=lib/openzeppelin-contracts/contracts/"
+      ],
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "metadata": {
+        "bytecodeHash": "ipfs"
+      },
+      "compilationTarget": {
+        "src/Sqam.sol": "Sqam"
+      },
+      "libraries": {}
+    },
+    "sources": {
+      "lib/openzeppelin-contracts/contracts/metatx/ERC2771Context.sol": {
+        "keccak256": "0x5e8c266715f6454b732e6c12a85f75dcf3b1c298a90830bb56bfda29fa5b6264",
+        "urls": [
+          "bzz-raw://3c39e6260f19fc56dc7fe0289cd49d781c33d85520ffed44e45c138f94110a84",
+          "dweb:/ipfs/QmPE2XDhT3C1xa3MeVaiUMpNnDquK9kDiWAdkayktTGbZA"
+        ],
+        "license": "MIT"
+      },
+      "lib/openzeppelin-contracts/contracts/utils/Context.sol": {
+        "keccak256": "0xe2e337e6dde9ef6b680e07338c493ebea1b5fd09b43424112868e9cc1706bca7",
+        "urls": [
+          "bzz-raw://6df0ddf21ce9f58271bdfaa85cde98b200ef242a05a3f85c2bc10a8294800a92",
+          "dweb:/ipfs/QmRK2Y5Yc6BK7tGKkgsgn3aJEQGi5aakeSPZvS65PV8Xp3"
+        ],
+        "license": "MIT"
+      },
+      "src/Sqam.sol": {
+        "keccak256": "0x9862190c8a1f6f381d570d65db82e66eb1ec6eb113be648d467248c63b90d6a4",
+        "urls": [
+          "bzz-raw://7c6b05a13c45e2267d3d7e46aaf75beafa275f5e2fbfa3e9e71b85ef70db8078",
+          "dweb:/ipfs/QmWd4M1XBWh5bJMBZmZhBJxEos5fhzdd9zcEmhzrJpjxKe"
+        ],
+        "license": "UNLICENSED"
+      },
+      "src/SqamEvents.sol": {
+        "keccak256": "0x86af94cd105a8aef14853077599a2f4c3a523f9174d41b18fc53a12ca50ba3ba",
+        "urls": [
+          "bzz-raw://db31febeb27aa957824a1d1c6dacb2008604efeb48b346cc447ac3155e32f605",
+          "dweb:/ipfs/Qmf5ZQz3ujvEkfre45YJpTWr6HbtKhB7Svq6pA9PeVoD63"
+        ],
+        "license": "UNLICENSED"
+      }
+    },
+    "version": 1
+  },
+  "ast": {
+    "absolutePath": "src/Sqam.sol",
+    "id": 43583,
+    "exportedSymbols": {
+      "ERC2771Context": [
+        43449
+      ],
+      "Sqam": [
+        43582
+      ],
+      "SqamEvents": [
+        43599
+      ]
+    },
+    "nodeType": "SourceUnit",
+    "src": "39:614:22",
+    "nodes": [
+      {
+        "id": 43536,
+        "nodeType": "PragmaDirective",
+        "src": "39:24:22",
+        "nodes": [],
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".13"
+        ]
+      },
+      {
+        "id": 43538,
+        "nodeType": "ImportDirective",
+        "src": "65:83:22",
+        "nodes": [],
+        "absolutePath": "lib/openzeppelin-contracts/contracts/metatx/ERC2771Context.sol",
+        "file": "@openzeppelin/contracts/metatx/ERC2771Context.sol",
+        "nameLocation": "-1:-1:-1",
+        "scope": 43583,
+        "sourceUnit": 43450,
+        "symbolAliases": [
+          {
+            "foreign": {
+              "id": 43537,
+              "name": "ERC2771Context",
+              "nodeType": "Identifier",
+              "overloadedDeclarations": [],
+              "referencedDeclaration": 43449,
+              "src": "74:14:22",
+              "typeDescriptions": {}
+            },
+            "nameLocation": "-1:-1:-1"
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "id": 43540,
+        "nodeType": "ImportDirective",
+        "src": "149:46:22",
+        "nodes": [],
+        "absolutePath": "src/SqamEvents.sol",
+        "file": "./SqamEvents.sol",
+        "nameLocation": "-1:-1:-1",
+        "scope": 43583,
+        "sourceUnit": 43600,
+        "symbolAliases": [
+          {
+            "foreign": {
+              "id": 43539,
+              "name": "SqamEvents",
+              "nodeType": "Identifier",
+              "overloadedDeclarations": [],
+              "referencedDeclaration": 43599,
+              "src": "158:10:22",
+              "typeDescriptions": {}
+            },
+            "nameLocation": "-1:-1:-1"
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "id": 43582,
+        "nodeType": "ContractDefinition",
+        "src": "197:455:22",
+        "nodes": [
+          {
+            "id": 43554,
+            "nodeType": "FunctionDefinition",
+            "src": "310:87:22",
+            "nodes": [],
+            "body": {
+              "id": 43553,
+              "nodeType": "Block",
+              "src": "395:2:22",
+              "nodes": [],
+              "statements": []
+            },
+            "documentation": {
+              "id": 43545,
+              "nodeType": "StructuredDocumentation",
+              "src": "247:58:22",
+              "text": "@dev there's no state to make it as cheap as possible"
+            },
+            "implemented": true,
+            "kind": "constructor",
+            "modifiers": [
+              {
+                "arguments": [
+                  {
+                    "id": 43550,
+                    "name": "trustredForwarder",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 43547,
+                    "src": "372:17:22",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  }
+                ],
+                "id": 43551,
+                "kind": "baseConstructorSpecifier",
+                "modifierName": {
+                  "id": 43549,
+                  "name": "ERC2771Context",
+                  "nameLocations": [
+                    "357:14:22"
+                  ],
+                  "nodeType": "IdentifierPath",
+                  "referencedDeclaration": 43449,
+                  "src": "357:14:22"
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "357:33:22"
+              }
+            ],
+            "name": "",
+            "nameLocation": "-1:-1:-1",
+            "parameters": {
+              "id": 43548,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 43547,
+                  "mutability": "mutable",
+                  "name": "trustredForwarder",
+                  "nameLocation": "330:17:22",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 43554,
+                  "src": "322:25:22",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 43546,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "322:7:22",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "321:27:22"
+            },
+            "returnParameters": {
+              "id": 43552,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "395:0:22"
+            },
+            "scope": 43582,
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "id": 43566,
+            "nodeType": "FunctionDefinition",
+            "src": "403:111:22",
+            "nodes": [],
+            "body": {
+              "id": 43565,
+              "nodeType": "Block",
+              "src": "453:61:22",
+              "nodes": [],
+              "statements": [
+                {
+                  "eventCall": {
+                    "arguments": [
+                      {
+                        "id": 43560,
+                        "name": "reported",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 43556,
+                        "src": "484:8:22",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      },
+                      {
+                        "arguments": [],
+                        "expression": {
+                          "argumentTypes": [],
+                          "id": 43561,
+                          "name": "_msgSender",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [
+                            43415
+                          ],
+                          "referencedDeclaration": 43415,
+                          "src": "494:10:22",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_function_internal_view$__$returns$_t_address_$",
+                            "typeString": "function () view returns (address)"
+                          }
+                        },
+                        "id": 43562,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "kind": "functionCall",
+                        "lValueRequested": false,
+                        "nameLocations": [],
+                        "names": [],
+                        "nodeType": "FunctionCall",
+                        "src": "494:12:22",
+                        "tryCall": false,
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      ],
+                      "id": 43559,
+                      "name": "ReportedAddress",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 43598,
+                      "src": "468:15:22",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_address_$_t_address_$returns$__$",
+                        "typeString": "function (address,address)"
+                      }
+                    },
+                    "id": 43563,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "nameLocations": [],
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "468:39:22",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 43564,
+                  "nodeType": "EmitStatement",
+                  "src": "463:44:22"
+                }
+              ]
+            },
+            "functionSelector": "f2cb7083",
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "reportAddress",
+            "nameLocation": "412:13:22",
+            "parameters": {
+              "id": 43557,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 43556,
+                  "mutability": "mutable",
+                  "name": "reported",
+                  "nameLocation": "434:8:22",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 43566,
+                  "src": "426:16:22",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 43555,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "426:7:22",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "425:18:22"
+            },
+            "returnParameters": {
+              "id": 43558,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "453:0:22"
+            },
+            "scope": 43582,
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "id": 43581,
+            "nodeType": "FunctionDefinition",
+            "src": "520:130:22",
+            "nodes": [],
+            "body": {
+              "id": 43580,
+              "nodeType": "Block",
+              "src": "582:68:22",
+              "nodes": [],
+              "statements": [
+                {
+                  "eventCall": {
+                    "arguments": [
+                      {
+                        "id": 43574,
+                        "name": "domainHash",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 43568,
+                        "src": "612:10:22",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        }
+                      },
+                      {
+                        "id": 43575,
+                        "name": "good",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 43570,
+                        "src": "624:4:22",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      },
+                      {
+                        "arguments": [],
+                        "expression": {
+                          "argumentTypes": [],
+                          "id": 43576,
+                          "name": "_msgSender",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [
+                            43415
+                          ],
+                          "referencedDeclaration": 43415,
+                          "src": "630:10:22",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_function_internal_view$__$returns$_t_address_$",
+                            "typeString": "function () view returns (address)"
+                          }
+                        },
+                        "id": 43577,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "kind": "functionCall",
+                        "lValueRequested": false,
+                        "nameLocations": [],
+                        "names": [],
+                        "nodeType": "FunctionCall",
+                        "src": "630:12:22",
+                        "tryCall": false,
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        },
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      ],
+                      "id": 43573,
+                      "name": "ReportedDomain",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 43592,
+                      "src": "597:14:22",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_bytes32_$_t_bool_$_t_address_$returns$__$",
+                        "typeString": "function (bytes32,bool,address)"
+                      }
+                    },
+                    "id": 43578,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "nameLocations": [],
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "597:46:22",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 43579,
+                  "nodeType": "EmitStatement",
+                  "src": "592:51:22"
+                }
+              ]
+            },
+            "functionSelector": "e18f16e6",
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "reportDomain",
+            "nameLocation": "529:12:22",
+            "parameters": {
+              "id": 43571,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 43568,
+                  "mutability": "mutable",
+                  "name": "domainHash",
+                  "nameLocation": "550:10:22",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 43581,
+                  "src": "542:18:22",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 43567,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "542:7:22",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 43570,
+                  "mutability": "mutable",
+                  "name": "good",
+                  "nameLocation": "567:4:22",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 43581,
+                  "src": "562:9:22",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 43569,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "562:4:22",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "541:31:22"
+            },
+            "returnParameters": {
+              "id": 43572,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "582:0:22"
+            },
+            "scope": 43582,
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "abstract": false,
+        "baseContracts": [
+          {
+            "baseName": {
+              "id": 43541,
+              "name": "SqamEvents",
+              "nameLocations": [
+                "214:10:22"
+              ],
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 43599,
+              "src": "214:10:22"
+            },
+            "id": 43542,
+            "nodeType": "InheritanceSpecifier",
+            "src": "214:10:22"
+          },
+          {
+            "baseName": {
+              "id": 43543,
+              "name": "ERC2771Context",
+              "nameLocations": [
+                "226:14:22"
+              ],
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 43449,
+              "src": "226:14:22"
+            },
+            "id": 43544,
+            "nodeType": "InheritanceSpecifier",
+            "src": "226:14:22"
+          }
+        ],
+        "canonicalName": "Sqam",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "linearizedBaseContracts": [
+          43582,
+          43449,
+          43471,
+          43599
+        ],
+        "name": "Sqam",
+        "nameLocation": "206:4:22",
+        "scope": 43583,
+        "usedErrors": [],
+        "usedEvents": [
+          43592,
+          43598
+        ]
+      }
+    ],
+    "license": "UNLICENSED"
+  },
+  "id": 22
+}
