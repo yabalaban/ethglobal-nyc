@@ -21,7 +21,7 @@ import NewReportForm from '../components/NewReportForm';
 import { AddressReport, DomainReport } from '../types/report';
 import { useSqamReportAddress, useSqamReportDomain } from '../web3/contracts';
 import { SQAM_CONTRACT } from '../web3/wallet';
-import { Address, keccak256, toHex } from 'viem';
+import { Address } from 'viem';
 import { waitForTransactionReceipt } from 'viem/actions';
 import { useAccount, usePublicClient } from 'wagmi';
 import useReports from '../hooks/useReports';
@@ -46,7 +46,7 @@ const Reports = () => {
       let receipt: { hash: Address };
       if ('domain' in report) {
         receipt = await reportDomain({
-          args: [keccak256(toHex(report.domain)), report.type === 'good'],
+          args: [report.domain, report.type === 'good'],
         });
       } else {
         receipt = await reportAddress({

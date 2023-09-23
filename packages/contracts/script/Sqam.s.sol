@@ -11,7 +11,7 @@ contract DeploySqamScript is Script {
         uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
         vm.startBroadcast(deployerPrivateKey);
 
-        Sqam sqam = new Sqam{salt: bytes32(uint256(1337))}(
+        Sqam sqam = new Sqam{salt: bytes32(uint256(13378008))}(
             // trusted forwarder is gelato erc2771
             0xb539068872230f20456CF38EC52EF2f91AF4AE49
         );

@@ -15,7 +15,8 @@ contract Sqam is SqamEvents, ERC2771Context {
         emit ReportedAddress(reported, _msgSender());
     }
 
-    function reportDomain(bytes32 domainHash, bool good) external {
-        emit ReportedDomain(domainHash, good, _msgSender());
+    function reportDomain(string calldata domain, bool good) external {
+        bytes32 domainHash = keccak256(bytes(domain));
+        emit ReportedDomain(domainHash, good, _msgSender(), domain);
     }
 }
