@@ -9,5 +9,4 @@ export const onTransaction: OnTransactionHandler = async ({ transaction, transac
   // 4. [Snap] local scoring 
   // 5. [Snap] insight (severe or normal) based on the score
   const data = await GetScoring(["yabalaban.eth"]);
-  return { content: panel([text(`da ${data} ta`)]) };
 };

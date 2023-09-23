@@ -19,7 +19,7 @@
   },
   "initialPermissions": {
     "endowment:transaction-insight": {
-      "allowTransactionOrigin": true
+      "allowTransactionOrigin": true 
     },
     "endowment:network-access": {}
   },

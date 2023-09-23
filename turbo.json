@@ -3,14 +3,23 @@
   "pipeline": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", "out/**"]
+      "outputs": ["dist/**", "out/**", "src/web3/contracts.ts"]
+    },
+    "web#build": {
+      "env": [
+        "VITE_WC_PROJECT_ID"
+      ]
     },
     "lint": {},
     "dev": {
+      "dependsOn": ["codegen"],
       "cache": false,
       "persistent": true
     },
     "test": {
+      "dependsOn": ["^build"]
+    },
+    "codegen": {
       "dependsOn": ["^build"]
     }
   }

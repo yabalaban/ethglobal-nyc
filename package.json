@@ -1,5 +1,5 @@
 {
-  "name": "ethglobal-newyork",
+  "name": "@sqam/core",
   "version": "1.0.0",
   "repository": "git@github.com:yabalaban/ethglobal-nyc.git",
   "author": "",
@@ -14,7 +14,8 @@
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "test": "turbo run test"
+    "test": "turbo run test",
+    "codegen": "turbo run codegen"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^6.7.2",
