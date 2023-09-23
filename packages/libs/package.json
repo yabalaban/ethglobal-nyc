@@ -1,0 +1,12 @@
+{
+    "name": "@sqam/libs",
+    "version": "1.0.0",
+    "main": "src/index.ts",
+    "types": "src/index.ts",
+    "private": true,
+    "scripts": {
+      "build": "tsc -b"
+    },
+    "author": "",
+    "license": "ISC"
+  }
