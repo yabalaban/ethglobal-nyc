@@ -7,7 +7,7 @@ const AIRSTACK_KEY3 = '66088c30365146f1924825296523671b';
 const AIRSTACK_KEYS = [AIRSTACK_KEY1, AIRSTACK_KEY2, AIRSTACK_KEY3];
 
 const DomainReportersQuery = `query DomainReportersQuery($domainHash: String!) {
-  reportedDomains(domainHash: $domainHash) {
+  reportedDomains(where: {domainHash: $domainHash}) {
     id
     domainHash
     domain
@@ -17,7 +17,7 @@ const DomainReportersQuery = `query DomainReportersQuery($domainHash: String!) {
 }`;
 
 const RecipientReportersQuery = `query RecipientReportersQuery($reported: String!) {
-  reportedAddresses(reported: $reported) {
+  reportedAddresses(where: {reported: $reported}) {
     id
     reported
     reporter
@@ -60,7 +60,7 @@ const ProfilesQuery = `query Query($owners: [Identity!], $tokenAddress: [Address
 }`;
 
 const MyReportedAddressesQuery = `query MyReportedAddressesQuery($reporter: String!) {
-  reportedAddresses(reporter: $reporter) {
+  reportedAddresses(where: {reporter: $reporter}) {
     id
     reported
     reporter
@@ -69,7 +69,7 @@ const MyReportedAddressesQuery = `query MyReportedAddressesQuery($reporter: Stri
 }`;
 
 const MyReportedDomainsQuery = `query MyReportedDomainsQuery($reporter: String!) {
-  reportedDomains(reporter: $reporter) {
+  reportedDomains(where: {reporter: $reporter}) {
     id
     domainHash
     domain
