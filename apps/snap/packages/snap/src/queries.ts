@@ -22,7 +22,7 @@ const RecipientReportersQuery = `query RecipientReportersQuery($reported: String
   }
 }`
 
-const ProfilesQuery = `query Query($owners: [Identity!], $tokenAddress: [Address!]) {
+const ProfilesQuery = `query Query($owners: [Identity!], $resolved: [Address!], $tokenAddress: [Address!]) {
   TokenBalances(
     input: {filter: {owner: {_in: $owners}, tokenAddress: {_in: $tokenAddress}}, blockchain: ethereum}
   ) {
@@ -44,6 +44,14 @@ const ProfilesQuery = `query Query($owners: [Identity!], $tokenAddress: [Address
   SocialFollowers(input: {filter: {identity: {_in: $owners}}, blockchain: ALL}) {
     Follower {
       id
+    }
+  }
+  Domains(
+    input: {filter: {resolvedAddress: {_in: $resolved}, isPrimary: {_eq: true}}, blockchain: ethereum}
+  ) {
+    Domain {
+      name
+      resolvedAddress
     }
   }
 }`
@@ -78,19 +86,19 @@ function GetTokenTypeTotal(balanceDict: Map<string, number>, keys: string[], tok
   return wrapped;
 }
 
-export async function GetBalances(owners: string[]): Promise<number[]> {
+export async function GetBalances(owners: string[]): Promise<any[]> {
   if (owners.length == 0) {
-    return [0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
+    return [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, []];
   }
 
   const tokens = Object.keys(WRAPPED_ETH).concat(Object.keys(STABLE_COINS), Object.keys(DAO_TOKENS));
-  const data = await fetchAirstackQuery(ProfilesQuery, {owners: owners, tokenAddress: tokens});
+  const data = await fetchAirstackQuery(ProfilesQuery, {owners: owners, resolved: owners, tokenAddress: tokens});
   
   const balance: [string, number][] = data.TokenBalances.TokenBalance?.map(function(b: any, i: any) {
     return [b.tokenAddress, +b.formattedAmount];
   }) ?? [];
   const balanceDict = new Map<string, number>();
-  for (let pair of balance) {
+  for (const pair of balance) {
     balanceDict.set(pair[0], pair[1]);
   }
   const wrappedEth = GetTokenTypeTotal(balanceDict, Object.keys(WRAPPED_ETH), balanceDict);
@@ -99,7 +107,16 @@ export async function GetBalances(owners: string[]): Promise<number[]> {
   const poaps = data.Poaps.Poap?.length ?? 0.0;
   const socials = (data.Socials.Social?.length ?? 0.0) * 1.0 / owners.length;
   const followers = data.SocialFollowers?.Follower?.length ?? 0.0;
-  return [wrappedEth, stableCoins, daoTokens, poaps, socials, followers]
+  const domains = data.Domains?.Domain ?? [];
+  const domainsDict = new Map<string, string>();
+  for (const pair of domains) {
+    domainsDict.set(pair.resolvedAddress, pair.name);
+  }
+  const confirmedBy = new Set<string>();
+  for (const address of owners) {
+    confirmedBy.add(domainsDict.get(address) ?? address);
+  }
+  return [wrappedEth, stableCoins, daoTokens, poaps, socials, followers, confirmedBy]
 }
 
 async function fetchAirstackQuery(query: string, variables: Record<string, any>) {

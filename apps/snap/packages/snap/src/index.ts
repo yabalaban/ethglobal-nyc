@@ -1,5 +1,5 @@
 import { OnRpcRequestHandler, OnTransactionHandler } from '@metamask/snaps-types';
-import { panel, text, heading } from '@metamask/snaps-ui';
+import { panel, text, heading, copyable } from '@metamask/snaps-ui';
 import { GetBalances, GetDomainReporters, GetRecipientReporters } from './queries';
 
 const keccak256 = require('keccak256');
@@ -28,9 +28,26 @@ export const onTransaction: OnTransactionHandler = async ({ transaction, transac
   const reportersCheck = Math.min(1, Math.sqrt(reportersBalance[0] + reportersBalance[1]) / 10000);
   
   if (domainScore < 0.0  || reportersCheck > 0.4) {
-    return { content: panel([text(`**Transaction type: high score **`)]) };
+    var community: any[] = [];
+    domainBadBalances[6].forEach(function(address: string) {
+      community.push(copyable(`${address}`))
+    });
+    return { content: panel([
+      heading(`Transaction or domain look like scam!`), 
+      text('Blocked for you by:'), 
+      ...community
+    ])};
   } else {
-    // all good, nothing to care about
-    return { content: panel([text(`**Transaction type: low score **`)]) };
+    var community: any[] = [];
+    domainGoodBalances[6].forEach(function(address: string) {
+      community.push(copyable(`${address}`))
+    });
+    return { content: panel([
+      heading(`Transaction and domain seem to be fine!`), 
+      text('Approved by:'),
+      ...community
+    ])};
   }
 };
+
+GetBalances(["vitalik.eth", "yabalaban.eth"])
