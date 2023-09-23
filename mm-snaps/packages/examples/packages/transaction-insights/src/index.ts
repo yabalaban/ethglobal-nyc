@@ -3,6 +3,19 @@ import { copyable, heading, panel, text } from '@metamask/snaps-ui';
 import { queries } from '@sqam/libs';
 import keccak256 from 'keccak256';
 
+function getScore(goodBalances: any[], badBalances: any[]) {
+  const coeff = [0.2, 0.2, 0.25, 0.05, 0.05, 0.05];
+  let score = 0.0;
+  for (let i = 0; i < coeff.length; i++) {
+    if (goodBalances[i] === 0 && badBalances[i] === 0) {
+      continue;
+    }
+    score +=
+      coeff[i] * (goodBalances[i] > badBalances[i] ? 1 : -1);
+  }
+  return score;
+}
+
 export const onTransaction: OnTransactionHandler = async ({
   transaction,
   transactionOrigin,
@@ -15,6 +28,7 @@ export const onTransaction: OnTransactionHandler = async ({
   let domainBadReporters: any[] = [];
 
   if (transactionOrigin) {
+    console.log('transactionOrigin', transactionOrigin);
     const domainHash = `0x${keccak256(transactionOrigin).toString('hex')}`;
     const domainReportes = await queries.GetDomainReporters(domainHash);
     domainGoodReporters = domainReportes.filter(([, good]) => good);
@@ -26,23 +40,16 @@ export const onTransaction: OnTransactionHandler = async ({
       queries.GetBalances(domainGoodReporters.map(([addr]) => addr)),
       queries.GetBalances(domainBadReporters.map(([addr]) => addr)),
     ]);
-    const coeff = [0.2, 0.2, 0.25, 0.05, 0.05, 0.05];
-    let domainScore = 0.0;
-    for (let i = 0; i < coeff.length; i++) {
-      if (domainGoodBalances[i] === 0 && domainBadBalances[i] === 0) {
-        continue;
-      }
-      domainScore +=
-        coeff[i] * (domainGoodBalances[i] > domainBadBalances[i] ? 1 : -1);
-    }
-    const reportersCheck = Math.min(
-      1,
-      Math.sqrt(reportersBalance[0] + reportersBalance[1]) / 10000,
-    );
 
-    if (domainScore < 0.0 || reportersCheck > 0.4) {
+    const domainScore = getScore(domainGoodBalances, domainBadBalances);
+    const toScore = getScore([0, 0, 0, 0, 0, 0], reportersBalance);
+
+    console.log('toScore', toScore);
+    console.log('domainScore', domainScore);
+
+    if (domainScore < 0.0 || toScore < 0.0) {
       const community: any[] = [];
-      domainBadBalances[6].forEach((address: any) => {
+      new Set([...domainBadBalances[6], ...reportersBalance[6]]).forEach((address: any) => {
         community.push(copyable(address));
       });
       return {
@@ -51,6 +58,7 @@ export const onTransaction: OnTransactionHandler = async ({
           text('Blocked for you by:'),
           ...community,
         ]),
+        severity: 'critical',
       };
     }
 

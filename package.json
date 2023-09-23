@@ -8,7 +8,7 @@
   "workspaces": [
     "packages/*",
     "apps/*",
-    "mm-snaps"
+    "mm-snaps/*"
   ],
   "scripts": {
     "build": "turbo run build",

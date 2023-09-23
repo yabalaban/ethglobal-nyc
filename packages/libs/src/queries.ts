@@ -1,7 +1,10 @@
 import { DAO_TOKENS, GRAPH_QUERY_URL, STABLE_COINS, WRAPPED_ETH } from './constants';
 
 const AIRSTACK_ENDPOINT = 'https://api.airstack.xyz/gql';
-const AIRSTACK_KEY = 'c017255cba7c4e199917a94addfdb682';
+const AIRSTACK_KEY1 = 'c017255cba7c4e199917a94addfdb682';
+const AIRSTACK_KEY2 = '78ef9a257fb84cce82b8f79d0ce3074a';
+const AIRSTACK_KEY3 = '66088c30365146f1924825296523671b';
+const AIRSTACK_KEYS = [AIRSTACK_KEY1, AIRSTACK_KEY2, AIRSTACK_KEY3];
 
 const DomainReportersQuery = `query DomainReportersQuery($domainHash: String!) {
   reportedDomains(domainHash: $domainHash) {
@@ -22,7 +25,7 @@ const RecipientReportersQuery = `query RecipientReportersQuery($reported: String
   }
 }`;
 
-const ProfilesQuery = `query Query($owners: [Identity!], $tokenAddress: [Address!]) {
+const ProfilesQuery = `query Query($owners: [Identity!], $tokenAddress: [Address!], $resolved: [Address!]) {
   TokenBalances(
     input: {filter: {owner: {_in: $owners}, tokenAddress: {_in: $tokenAddress}}, blockchain: ethereum}
   ) {
@@ -137,7 +140,7 @@ function GetTokenTypeTotal(
 
 export async function GetBalances(owners: string[]): Promise<any[]> {
   if (owners.length === 0) {
-    return [0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
+    return [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, new Set([])];
   }
 
   const tokens = Object.keys(WRAPPED_ETH).concat(
@@ -187,13 +190,20 @@ export async function GetENSDomains(resolvedAddresses: string[]): Promise<Record
   );
 }
 
+let currentKey = 0;
+const getAirstackKey = () => {
+  const key = AIRSTACK_KEYS[currentKey % AIRSTACK_KEYS.length];
+  currentKey += 1;
+  return key;
+};
+
 async function fetchAirstackQuery(query: string, variables: Record<string, any>) {
   const results = await fetch(AIRSTACK_ENDPOINT, {
     method: 'POST',
 
     headers: {
       'Content-Type': 'application/json',
-      Authorization: AIRSTACK_KEY,
+      Authorization: getAirstackKey(),
     },
 
     body: JSON.stringify({

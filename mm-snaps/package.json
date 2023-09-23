@@ -10,6 +10,7 @@
     "packages/*"
   ],
   "scripts": {
+    "dev": "yarn workspace @sqam/snap start",
     "setup": "yarn install",
     "postinstall": "simple-git-hooks",
     "lint:eslint": "eslint . --cache --ext js,jsx,ts,tsx",
