@@ -1,6 +1,6 @@
 export const AIRSTACK_ENDPOINT = 'https://api.airstack.xyz/gql';
 export const AIRSTACK_KEY = 'c017255cba7c4e199917a94addfdb682';
-export const GRAPH_QUERY_URL = 'https://api.studio.thegraph.com/query/53551/sqam-testnet-v1/version/latest';
+export const GRAPH_QUERY_URL = 'https://api.studio.thegraph.com/query/53551/sqam-testnet-v3/version/latest';
   
 export const WRAPPED_ETH = {
   "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH",
