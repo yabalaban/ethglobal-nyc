@@ -1,0 +1,27 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Sqam
+    network: sepolia
+    source:
+      address: "0x8e57171f2c10555935f47a8d8099c28209ad06d5"
+      abi: Sqam
+      startBlock: 4348680
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - ReportedAddress
+        - ReportedDomain
+      abis:
+        - name: Sqam
+          file: ./abis/Sqam.json
+      eventHandlers:
+        - event: ReportedAddress(indexed address,indexed address)
+          handler: handleReportedAddress
+        - event: ReportedDomain(indexed bytes32,indexed bool,indexed address,string)
+          handler: handleReportedDomain
+      file: ./src/sqam.ts
