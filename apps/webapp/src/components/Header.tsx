@@ -1,7 +1,9 @@
 import { Button, Flex, Spacer, Text, VStack, useColorMode } from '@chakra-ui/react';
 import { Web3Button } from '@web3modal/react';
+import { useAutoConnect } from '../hooks/useAutoconnect';
 
 const Header = () => {
+  useAutoConnect();
   const { colorMode, toggleColorMode } = useColorMode();
 
   return (
