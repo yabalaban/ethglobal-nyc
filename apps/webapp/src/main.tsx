@@ -1,9 +1,9 @@
+import './index.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import Main from './screens/Main.tsx';
-import './index.css';
-
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
+import { MetaMaskProvider } from './hooks/MetamaskContext/index.tsx';
 
 const theme = extendTheme({
   config: {
@@ -15,7 +15,9 @@ const theme = extendTheme({
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ChakraProvider theme={theme}>
-      <Main />
+      <MetaMaskProvider>
+        <Main />
+      </MetaMaskProvider>
     </ChakraProvider>
   </React.StrictMode>,
 );
