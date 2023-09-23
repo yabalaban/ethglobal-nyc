@@ -7,8 +7,10 @@ libs = ["lib"]
 base-goerli = "https://goerli.base.org"
 sepolia = "https://eth-sepolia.public.blastapi.io"
 base = "https://mainnet.base.org"
+gnosis = "https://rpc.gnosis.gateway.fm"
 
 [etherscan]
 base-goerli = { key = "${BASESCAN_API_KEY}", chain = "base-goerli" }
 sepolia = { key = "${ETHERSCAN_API_KEY}", chain = "sepolia" }
 base = { key = "${BASESCAN_API_KEY}", chain = "base" }
+gnosis = { key = "${GNOSIS_API_KEY}", chain = "gnosis" }

@@ -5,7 +5,7 @@
     "scripts": {
       "build": "forge build",
       "test": "forge test",
-      "deploy": "forge script script/Sqam.s.sol:DeploySqamScript  --rpc-url=https://eth-sepolia.public.blastapi.io --broadcast --verify -vvvv"
+      "deploy": "forge script script/Sqam.s.sol:DeploySqamScript  --rpc-url=https://rpc.gnosis.gateway.fm --broadcast --verify -vvvv"
     },
     "author": "",
     "license": "ISC"
