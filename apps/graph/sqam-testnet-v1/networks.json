@@ -1,0 +1,8 @@
+{
+  "sepolia": {
+    "Sqam": {
+      "address": "0x81fA1325F9a1937F558b2A086e71919b0eAcc8D0",
+      "startBlock": 4344820
+    }
+  }
+}

@@ -1,0 +1,18 @@
+type ReportedAddress @entity(immutable: true) {
+  id: Bytes!
+  reported: Bytes! # address
+  reporter: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type ReportedDomain @entity(immutable: true) {
+  id: Bytes!
+  domainHash: Bytes! # bytes32
+  good: Boolean! # bool
+  reporter: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
