@@ -5,6 +5,16 @@ __metadata:
   version: 6
   cacheKey: 8
 
+"@airstack/node@npm:^0.0.5":
+  version: 0.0.5
+  resolution: "@airstack/node@npm:0.0.5"
+  dependencies:
+    "@types/node": 14.14.30
+    graphql: 16.7.1
+  checksum: fffb9ea334649fd3ebf3c9c6bf8cbde5b02b3a188ad4ec062238fa26fb5e4ae6343db69a3dc25035204b08e1b307530021ebb1c67d8af2cb512f24f36c793213
+  languageName: node
+  linkType: hard
+
 "@ampproject/remapping@npm:^2.2.0":
   version: 2.2.1
   resolution: "@ampproject/remapping@npm:2.2.1"
@@ -4772,6 +4782,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@metamask/template-snap-monorepo@workspace:."
   dependencies:
+    "@airstack/node": ^0.0.5
     "@metamask/eslint-config": ^10.0.0
     "@metamask/eslint-config-jest": ^10.0.0
     "@metamask/eslint-config-nodejs": ^10.0.0
@@ -6613,6 +6624,13 @@ __metadata:
   version: 20.3.1
   resolution: "@types/node@npm:20.3.1"
   checksum: 63a393ab6d947be17320817b35d7277ef03728e231558166ed07ee30b09fd7c08861be4d746f10fdc63ca7912e8cd023939d4eab887ff6580ff704ff24ed810c
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:14.14.30":
+  version: 14.14.30
+  resolution: "@types/node@npm:14.14.30"
+  checksum: 7e4f8c94f08b1e5cc6115dbb300f23558ec033a607bf884c92c4502e63d2208c2f3c1f539ee1beae1b61fb6f3f8cb123d3665e9fde02692244055f9c28243118
   languageName: node
   linkType: hard
 
@@ -13592,6 +13610,13 @@ __metadata:
   peerDependencies:
     graphql: ">=0.8.0"
   checksum: 41620699637a5294937bd61d6e2696edea5a1279ef3d8f4b33716a910635595435381ccd1b74c6fae62c2bc81064c62ae27d3559c8380c0f99bdfdc8ecb249b0
+  languageName: node
+  linkType: hard
+
+"graphql@npm:16.7.1":
+  version: 16.7.1
+  resolution: "graphql@npm:16.7.1"
+  checksum: c924d8428daf0e96a5ea43e9bc3cd1b6802899907d284478ac8f705c8fd233a0a51eef915f7569fb5de8acb2e85b802ccc6c85c2b157ad805c1e9adba5a299bd
   languageName: node
   linkType: hard
 
