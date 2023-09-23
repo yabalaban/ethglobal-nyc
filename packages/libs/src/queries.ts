@@ -7,6 +7,7 @@ const DomainReportersQuery = `query DomainReportersQuery($domainHash: String!) {
   reportedDomains(domainHash: $domainHash) {
     id
     domainHash
+    domain
     good
     reporter
   }
@@ -49,6 +50,15 @@ const MyReportedDomainsQuery = `query MyReportedDomainsQuery($reporter: String!)
     domain
     good
     reporter
+  }
+}`;
+
+const ENSDomainsQuery = `query ENSDomains($resolved: [Address!]) {
+  Domains(input: {filter: {resolvedAddress: {_in: $resolved}, isPrimary: {_eq:true}}, blockchain: ethereum}) {
+    Domain {
+      name
+      resolvedAddress
+    }
   }
 }`;
 
@@ -96,6 +106,17 @@ export async function GetBalances(owners: string[]): Promise<number[]> {
   return data.TokenBalances.TokenBalance.map(function (b: any) {
     return b.formattedAmount;
   });
+}
+
+export async function GetENSDomains(resolvedAddresses: string[]): Promise<Record<string, string>> {
+  const data = await fetchAirstackQuery(ENSDomainsQuery, { resolved: resolvedAddresses });
+  console.log(data.Domains);
+  return (
+    data.Domains.Domain?.reduce((map: Record<string, string>, obj: any) => {
+      map[obj.resolvedAddress] = obj.name;
+      return map;
+    }, {}) ?? {}
+  );
 }
 
 async function fetchAirstackQuery(query: string, variables: Record<string, any>) {

@@ -8,6 +8,7 @@ export const WC_PROJECT_ID = import.meta.env.VITE_WC_PROJECT_ID;
 
 const { publicClient } = configureChains(chains, [w3mProvider({ projectId: WC_PROJECT_ID })]);
 export const wagmiConfig = createConfig({
+  autoConnect: true,
   connectors: [
     ...w3mConnectors({ projectId: WC_PROJECT_ID, chains }),
     new SafeConnector({

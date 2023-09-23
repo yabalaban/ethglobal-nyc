@@ -25,6 +25,7 @@ import { Address } from 'viem';
 import { waitForTransactionReceipt } from 'viem/actions';
 import { useAccount, usePublicClient } from 'wagmi';
 import useReports from '../hooks/useReports';
+import ReportDisplay from './ReportDisplay';
 
 const Reports = () => {
   const publicClient = usePublicClient();
@@ -39,6 +40,7 @@ const Reports = () => {
     address: SQAM_CONTRACT,
   });
   const { reports, reloadReports } = useReports({ address });
+  const [openReport, setOpenReport] = useState<string | null>(null);
 
   const onReport = async (report: DomainReport | AddressReport) => {
     setIsLoading(true);
@@ -95,7 +97,7 @@ const Reports = () => {
             <Card
               key={`report-${report}`}
               _hover={{ opacity: 0.8, cursor: 'pointer' }}
-              // onClick={() => setOpenReport(report)}
+              onClick={() => setOpenReport(report)}
             >
               <CardBody>
                 <Flex align="center">
@@ -114,6 +116,20 @@ const Reports = () => {
           <ModalBody>
             <NewReportForm isLoading={isLoading} onReport={onReport} />
           </ModalBody>
+        </ModalContent>
+      </Modal>
+      <Modal isOpen={!!openReport} size="xl" onClose={() => setOpenReport(null)}>
+        <ModalOverlay />
+        <ModalContent>
+          {openReport && (
+            <>
+              <ModalHeader>{openReport} reporters</ModalHeader>
+              <ModalCloseButton />
+              <ModalBody>
+                <ReportDisplay identifier={openReport} />
+              </ModalBody>
+            </>
+          )}
         </ModalContent>
       </Modal>
     </>
