@@ -1,9 +1,9 @@
 import { EthereumClient, w3mConnectors, w3mProvider } from '@web3modal/ethereum';
 import { Address, configureChains, createConfig } from 'wagmi';
-import { sepolia, base, gnosis } from 'wagmi/chains';
+import { base, mainnet, gnosis } from 'wagmi/chains';
 import { SafeConnector } from 'wagmi/connectors/safe';
 
-const chains = [sepolia, base, gnosis];
+const chains = [gnosis, base, mainnet];
 export const WC_PROJECT_ID = import.meta.env.VITE_WC_PROJECT_ID;
 
 const { publicClient } = configureChains(chains, [w3mProvider({ projectId: WC_PROJECT_ID })]);

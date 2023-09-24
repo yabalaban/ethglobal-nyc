@@ -15,9 +15,6 @@
       "path": "../../../snaps-ui"
     },
     {
-      "path": "../../../snaps-jest"
-    },
-    {
       "path": "../../../snaps-cli"
     }
   ]

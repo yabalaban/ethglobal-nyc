@@ -11,7 +11,10 @@
     "mm-snaps/*"
   ],
   "scripts": {
+    "build:snap": "cd mm-snaps && yarn && yarn build && yarn build:snap",
     "build": "turbo run build",
+    "copy:snap": "yarn build:snap && mkdir -p apps/webapp/dist/snap && cp -r mm-snaps/packages/examples/packages/transaction-insights/* apps/webapp/dist/snap",
+    "production": "yarn build && yarn build:snap && yarn copy:snap",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
