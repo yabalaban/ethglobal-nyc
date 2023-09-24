@@ -1,0 +1,16 @@
+{
+    "name": "@sqam/protocol",
+    "version": "1.0.0",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "private": true,
+    "scripts": {
+      "build": "tsc -b"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+      "@sqam/libs": "*",
+      "keccak256": "^1.0.6"
+    }
+  }
