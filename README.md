@@ -15,17 +15,17 @@ Our Snap calculates credibility of both approving and rejecting members to make 
 Sqam uses a stateless smart-contract to allow for even lower gas fees.
 
 Contracts:
-• foundry (+openzeppelin) to develop stateless smart contract
-• deployed to [Gnosis](./packages/contracts/broadcast/Sqam.s.sol/100/run-latest.json) (mainnet) + sepolia (testnet) via CREATE2
+- foundry (+openzeppelin) to develop stateless smart contract
+- deployed to [Gnosis](./packages/contracts/broadcast/Sqam.s.sol/100/run-latest.json) (mainnet) + sepolia (testnet) via CREATE2
 
 Web:
-• vite + react + @chakra-ui
-• [WalletConnect](./apps/webapp/src/web3/wallet.ts) + wagmi + viem
+- vite + react + @chakra-ui
+- [WalletConnect](./apps/webapp/src/web3/wallet.ts) + wagmi + viem
 
 Other:
-• [Metamask Snap using mm snaps repo](./mm-snaps/packages/examples/packages/transaction-insights/src/index.ts)
-• [thegraph custom subgraph](./apps/graph/sqam-testnet-v4/schema.graphql) that indexes our contract
-• number of [AirStack queries](./packages/libs/src/queries.ts) for on-chain reputation calculation
+- [Metamask Snap using mm snaps repo](./mm-snaps/packages/examples/packages/transaction-insights/src/index.ts)
+- [thegraph custom subgraph](./apps/graph/sqam-testnet-v4/schema.graphql) that indexes our contract
+- number of [AirStack queries](./packages/libs/src/queries.ts) for on-chain reputation calculation
 
 ## Bootstrap
 
