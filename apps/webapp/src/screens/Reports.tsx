@@ -54,7 +54,7 @@ const Reports = () => {
           args: [report.address],
         });
       }
-      await waitForTransactionReceipt(publicClient, { ...receipt, confirmations: 2 });
+      await waitForTransactionReceipt(publicClient, { ...receipt, confirmations: 4 });
       await reloadReports();
       setIsNewReportModalOpen(false);
       toast({
@@ -77,7 +77,7 @@ const Reports = () => {
     <>
       <VStack align="stretch">
         <HStack pt="12px">
-          <Text as="b" fontSize="xl">
+          <Text as="b" fontSize="lg">
             Reports
           </Text>
           <Spacer />

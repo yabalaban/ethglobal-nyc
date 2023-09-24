@@ -3492,8 +3492,8 @@ __metadata:
 
 "@sqam/libs@file:../packages/libs::locator=root%40workspace%3A.":
   version: 1.0.0
-  resolution: "@sqam/libs@file:../packages/libs#../packages/libs::hash=d571db&locator=root%40workspace%3A."
-  checksum: 7b2af1199cddf6e27082a5e25b950ce865749fddc85eebd923fa6bfaaf20cdceeaeec49580e2901a17d43a706801fffe492764d419bbb560c8079c688e434760
+  resolution: "@sqam/libs@file:../packages/libs#../packages/libs::hash=55ed14&locator=root%40workspace%3A."
+  checksum: 2dd2add1fe1b7b05f7a1e0f64a9635d28d182694df09848697d30442db8e5a985a98ccc0e61e864daf20af7ebe6016a64ffe6203fe87b12a76f7e74174d6ecd0
   languageName: node
   linkType: hard
 
