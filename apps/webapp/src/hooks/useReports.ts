@@ -1,26 +1,20 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Address } from 'viem';
 import { queries } from '@sqam/libs';
 
-const useReports = ({ address }: { address?: Address }) => {
+const useReports = () => {
   const [reports, setReports] = useState<string[]>([]);
 
   const reloadReports = useCallback(async () => {
-    if (!address) {
-      setReports([]);
-      return;
-    }
-
     const [addresses, domains] = await Promise.all([
-      queries.GetMyReportedAddresses(address),
-      queries.GetMyReportedDomains(address),
+      queries.GetAllReportedAddresses(),
+      queries.GetAllReportedDomains(),
     ]);
     setReports([...new Set([...addresses, ...domains])]);
-  }, [address, setReports]);
+  }, [setReports]);
 
   useEffect(() => {
     reloadReports();
-  }, [address]);
+  }, [reloadReports]);
 
   return { reloadReports, reports };
 };

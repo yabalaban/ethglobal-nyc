@@ -78,6 +78,25 @@ const MyReportedDomainsQuery = `query MyReportedDomainsQuery($reporter: String!)
   }
 }`;
 
+const AllReportedAddressesQuery = `query AllReportedAddressesQuery {
+  reportedAddresses {
+    id
+    reported
+    reporter
+    blockNumber
+  }
+}`;
+
+const AllReportedDomainsQuery = `query AllReportedDomainsQuery {
+  reportedDomains {
+    id
+    domainHash
+    domain
+    good
+    reporter
+  }
+}`;
+
 const ENSDomainsQuery = `query ENSDomains($resolved: [Address!]) {
   Domains(input: {filter: {resolvedAddress: {_in: $resolved}, isPrimary: {_eq:true}}, blockchain: ethereum}) {
     Domain {
@@ -98,6 +117,24 @@ export async function GetMyReportedAddresses(reporter: string): Promise<string[]
 
 export async function GetMyReportedDomains(reporter: string): Promise<string[]> {
   const results = await fetchGraphQuery(MyReportedDomainsQuery, { reporter: reporter });
+  const reported: string[] = [];
+  results.reportedDomains.forEach((reportedDomain: any) => {
+    reported.push(reportedDomain.domain);
+  });
+  return reported;
+}
+
+export async function GetAllReportedAddresses(): Promise<string[]> {
+  const results = await fetchGraphQuery(AllReportedAddressesQuery);
+  const reported: string[] = [];
+  results.reportedAddresses.forEach((reportedAddress: any) => {
+    reported.push(reportedAddress.reported);
+  });
+  return reported;
+}
+
+export async function GetAllReportedDomains(): Promise<string[]> {
+  const results = await fetchGraphQuery(AllReportedDomainsQuery);
   const reported: string[] = [];
   results.reportedDomains.forEach((reportedDomain: any) => {
     reported.push(reportedDomain.domain);
@@ -215,7 +252,7 @@ async function fetchAirstackQuery(query: string, variables: Record<string, any>)
   return characters.data;
 }
 
-async function fetchGraphQuery(query: string, variables: Record<string, any>) {
+async function fetchGraphQuery(query: string, variables?: Record<string, any>) {
   const results = await fetch(GRAPH_QUERY_URL, {
     method: 'POST',
 

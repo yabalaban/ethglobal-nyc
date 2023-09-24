@@ -6,6 +6,7 @@ export const onTransaction: OnTransactionHandler = async ({
   transaction,
   transactionOrigin,
 }) => {
+  console.log('transactionOrigin', transactionOrigin);
   try {
     const { decision, description, supporters } = await scoreTransaction({
       to: transaction.to as `0x${string}`,

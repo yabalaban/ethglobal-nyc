@@ -23,14 +23,13 @@ import { useSqamReportAddress, useSqamReportDomain } from '../web3/contracts';
 import { SQAM_CONTRACT } from '../web3/wallet';
 import { Address } from 'viem';
 import { waitForTransactionReceipt } from 'viem/actions';
-import { useAccount, usePublicClient } from 'wagmi';
+import { usePublicClient } from 'wagmi';
 import useReports from '../hooks/useReports';
 import ReportDisplay from './ReportDisplay';
 
 const Reports = () => {
   const publicClient = usePublicClient();
   const toast = useToast();
-  const { address } = useAccount();
   const [isLoading, setIsLoading] = useState(false);
   const [isNewReportModalOpen, setIsNewReportModalOpen] = useState(false);
   const { writeAsync: reportAddress } = useSqamReportAddress({
@@ -39,7 +38,7 @@ const Reports = () => {
   const { writeAsync: reportDomain } = useSqamReportDomain({
     address: SQAM_CONTRACT,
   });
-  const { reports, reloadReports } = useReports({ address });
+  const { reports, reloadReports } = useReports();
   const [openReport, setOpenReport] = useState<string | null>(null);
 
   const onReport = async (report: DomainReport | AddressReport) => {
@@ -79,7 +78,7 @@ const Reports = () => {
       <VStack align="stretch">
         <HStack pt="12px">
           <Text as="b" fontSize="xl">
-            My Reports
+            Reports
           </Text>
           <Spacer />
           <IconButton
