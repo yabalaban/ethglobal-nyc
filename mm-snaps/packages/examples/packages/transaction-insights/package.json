@@ -35,8 +35,7 @@
     "@metamask/snaps-types": "workspace:^",
     "@metamask/snaps-ui": "workspace:^",
     "@metamask/utils": "^8.1.0",
-    "@sqam/libs": "file:../../../../../packages/libs",
-    "keccak256": "^1.0.6"
+    "@sqam/protocol": "file:../../../../../packages/protocol"
   },
   "devDependencies": {
     "@jest/globals": "^29.5.0",

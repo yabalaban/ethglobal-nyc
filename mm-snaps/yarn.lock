@@ -5397,10 +5397,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sqam/libs@file:../../../../../packages/libs::locator=%40sqam%2Fsnap%40workspace%3Apackages%2Fexamples%2Fpackages%2Ftransaction-insights":
+"@sqam/libs@file:../packages/libs::locator=root%40workspace%3A.":
   version: 1.0.0
-  resolution: "@sqam/libs@file:../../../../../packages/libs#../../../../../packages/libs::hash=7e8b03&locator=%40sqam%2Fsnap%40workspace%3Apackages%2Fexamples%2Fpackages%2Ftransaction-insights"
-  checksum: 1f11c66c358a1fc9326252cbb837c632a1d8041317497799933e909abd4f999f01a5dff1ecd0376628f516834a382b7830446641c2cbfff761d05fe07dd24804
+  resolution: "@sqam/libs@file:../packages/libs#../packages/libs::hash=d571db&locator=root%40workspace%3A."
+  checksum: 7b2af1199cddf6e27082a5e25b950ce865749fddc85eebd923fa6bfaaf20cdceeaeec49580e2901a17d43a706801fffe492764d419bbb560c8079c688e434760
+  languageName: node
+  linkType: hard
+
+"@sqam/protocol@file:../../../../../packages/protocol::locator=%40sqam%2Fsnap%40workspace%3Apackages%2Fexamples%2Fpackages%2Ftransaction-insights":
+  version: 1.0.0
+  resolution: "@sqam/protocol@file:../../../../../packages/protocol#../../../../../packages/protocol::hash=1e0c2f&locator=%40sqam%2Fsnap%40workspace%3Apackages%2Fexamples%2Fpackages%2Ftransaction-insights"
+  dependencies:
+    "@sqam/libs": "*"
+    keccak256: ^1.0.6
+  checksum: c8cd57694354a9c8a2faa3289d7e73428833b975e31890c66ea14ac96dd40b2c9b842cdcd8903540e259e203991f519bde9db0d58bf0a31d601b99ec7be389f5
   languageName: node
   linkType: hard
 
@@ -5420,7 +5430,7 @@ __metadata:
     "@metamask/snaps-types": "workspace:^"
     "@metamask/snaps-ui": "workspace:^"
     "@metamask/utils": ^8.1.0
-    "@sqam/libs": "file:../../../../../packages/libs"
+    "@sqam/protocol": "file:../../../../../packages/protocol"
     "@swc/core": 1.3.78
     "@swc/jest": ^0.2.26
     "@typescript-eslint/eslint-plugin": ^5.42.1
@@ -5436,7 +5446,6 @@ __metadata:
     eslint-plugin-prettier: ^4.2.1
     eslint-plugin-promise: ^6.1.1
     jest: ^29.0.2
-    keccak256: ^1.0.6
     prettier: ^2.7.1
     prettier-plugin-packagejson: ^2.2.11
     ts-node: ^10.9.1
